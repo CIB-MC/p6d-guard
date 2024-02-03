@@ -4,8 +4,9 @@ use warnings;
 use utf8;
 
 use Amon2::Util;
-use HTTP::Session2::ClientStore2;
 use Crypt::CBC;
+use HTTP::Session2::ServerStore;
+use Cache::Memcached::Fast::Safe;
 
 sub init {
     my ($class, $c) = @_;
@@ -41,18 +42,32 @@ sub init {
 }
 
 # $c->session() accessor.
-my $cipher = Crypt::CBC->new({
-    key => '_aogfdc2_U7u4ld9ZtaGYBJ2rCt7wL3R',
-    cipher => 'Rijndael',
-});
 sub _session {
     my $self = shift;
 
     if (!exists $self->{session}) {
-        $self->{session} = HTTP::Session2::ClientStore2->new(
+        $self->{session} = HTTP::Session2::ServerStore->new(
             env => $self->req->env,
             secret => 'YcygUI1yDIi-qIOvrurKtTjtbmC0Pf0a',
-            cipher => $cipher,
+            store => Cache::Memcached::Fast::Safe->new({
+                servers => ['127.0.0.1:11211'],
+                        namespace => 'p6dguard::session::',
+                hash_namespace => 1
+            }),
+            session_cookie => {
+               httponly => 1,
+               secure   => 0,
+               name => 'hss_session',
+               path => '/',
+               samesite => 'Lax'
+            },
+            xsrf_cookie => {
+                httponly => 0,
+                secure   => 1,
+                name     => 'XSRF-TOKEN',
+                path     => '/',
+                samesite => 'Strict'
+            }
         );
     }
     return $self->{session};

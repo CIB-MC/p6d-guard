@@ -111,6 +111,24 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  Cache-Memcached-Fast-0.28
+    pathname: R/RA/RAZ/Cache-Memcached-Fast-0.28.tar.gz
+    provides:
+      Cache::Memcached::Fast 0.28
+    requirements:
+      Carp 1.25
+      ExtUtils::MakeMaker 0
+      XSLoader 0.14
+  Cache-Memcached-Fast-Safe-0.06
+    pathname: K/KA/KAZEBURO/Cache-Memcached-Fast-Safe-0.06.tar.gz
+    provides:
+      Cache::Memcached::Fast::Safe 0.06
+    requirements:
+      Cache::Memcached::Fast 0.23
+      Digest::SHA 0
+      Module::Build::Tiny 0.035
+      POSIX::AtFork 0.02
+      parent 0
   Carp-Assert-More-2.3.0
     pathname: P/PE/PETDANCE/Carp-Assert-More-2.3.0.tar.gz
     provides:
@@ -1759,6 +1777,18 @@ DISTRIBUTIONS
       perl 5.006002
       strict 0
       warnings 0
+  POSIX-AtFork-0.04
+    pathname: N/NI/NIKOLAS/POSIX-AtFork-0.04.tar.gz
+    provides:
+      POSIX::AtFork 0.04
+    requirements:
+      Devel::PPPort 3.19
+      ExtUtils::MakeMaker 6.59
+      ExtUtils::ParseXS 3.18
+      Test::More 0.88
+      Test::SharedFork 0
+      XSLoader 0.02
+      perl 5.008001
   POSIX-strftime-Compiler-0.46
     pathname: K/KA/KAZEBURO/POSIX-strftime-Compiler-0.46.tar.gz
     provides:

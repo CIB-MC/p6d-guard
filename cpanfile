@@ -14,6 +14,8 @@ requires 'Test::WWW::Mechanize::PSGI';
 requires 'Text::Xslate', '2.0009';
 requires 'Time::Piece', '1.20';
 requires 'perl', '5.010_001';
+requires 'HTTP::Session2::ServerStore', '1.10';
+requires 'Cache::Memcached::Fast::Safe', '0.06';
 
 on configure => sub {
     requires 'Module::Build', '0.38';

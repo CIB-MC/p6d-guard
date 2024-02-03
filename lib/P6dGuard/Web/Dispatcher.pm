@@ -17,6 +17,7 @@ any '/' => sub {
 post '/reset_counter' => sub {
     my $c = shift;
     $c->session->remove('counter');
+    $c->session->expire();
     return $c->redirect('/');
 };
 
