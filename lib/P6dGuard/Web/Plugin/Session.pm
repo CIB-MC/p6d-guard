@@ -4,7 +4,6 @@ use warnings;
 use utf8;
 
 use Amon2::Util;
-use Crypt::CBC;
 use HTTP::Session2::ServerStore;
 use Cache::Memcached::Fast::Safe;
 
