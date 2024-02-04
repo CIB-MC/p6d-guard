@@ -9,7 +9,7 @@ use P6dGuard::Util::Password;
 my $c = P6dGuard->bootstrap();
 my $line = "";
 
-print "=== p6d-guard create member script ===\n";
+print "=== p6d-guard reset member password script ===\n";
 
 print "Please input login_id: ";
 $line = <STDIN>;
@@ -21,10 +21,10 @@ if (!($line && $line =~ m/^[\p{PosixAlnum}_\-]+$/ )) {
 }
 my $login_id = $line;
 
-my $peek = $c->db()->single('member', {login_id => $login_id});
+my $member = $c->db()->single('member', {login_id => $login_id});
 
-if ($peek) {
-    print "There is a member with the login_id already!\n";
+if (!$member) {
+    print "There is no member with the login_id!\n";
     exit(0);
 }
 
@@ -41,10 +41,10 @@ my $password = $line;
 my $password_salt = P6dGuard::Util::Password::get_salt();
 my $password_hash = P6dGuard::Util::Password::get_hash($password, $password_salt);
 
-$c->db()->insert('member', {
+$member->update({
     login_id => $login_id,
     password_hash => $password_hash,
     password_salt => $password_salt
 });
 
-print "=== member is created! ===\n";
+print "=== member password is reseted! ===\n";
