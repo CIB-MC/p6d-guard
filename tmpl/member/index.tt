@@ -4,8 +4,17 @@
 <form method="post">
     <p>Your member id: [% c().logged_in_member().id %]<br>
     Your IP addreres: [% client_ip_address %]</p>
-    <button type="submit">add/update by this IP</button>
+    <input type="hidden" name="update_by_client_ip" value="1">
+    <button type="submit">Update whitelist by this IP</button>
 </form>
+<hr>
+<form method="post">
+    <h3>manual IP input</h3>
+    <label>IP: <input type="text" name="ip_address"></label>
+    <button type="submit">Update whitelist</button>
+    <input type="hidden" name="update_by_input" value="1">
+</form>
+
 <hr>
 <div>
     <h3>whitelist</h3>
@@ -18,12 +27,23 @@
                     <th>member id</th>
                     <th>ip address</th>
                     <th>last update</th>
+                    <th>op</th>
                 </tr>
                 [%- FOR row IN whitelist %]
                     <tr>
                         <td>[% row.member_id %]</td>
                         <td>[% row.ip_address %]</td>
                         <td>[% row.last_update %]</td>
+                        <td>
+                            [%- IF c().logged_in_member().id == row.member_id %]
+                                <form action="/member/ip_delete/" method="post">
+                                    <input type="hidden" name="row_id" value="[% row.id %]">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            [%- ELSE %]
+                                <button type="button" disabled>Delete</button>
+                            [%- END %]
+                        </td>
                     </tr>
                 [% END %]
             </tbody>

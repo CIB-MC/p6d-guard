@@ -13,6 +13,7 @@ any  '/' => 'Index#redirect_member_login';
 any  '/login/member/' => 'Login::Member#index';
 
 any  '/member/' => 'Member#index';
+post '/member/ip_delete/' => 'Member#ip_delete';
 get  '/member/logout/' => 'Member#logout';
 
 1;
