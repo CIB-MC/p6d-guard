@@ -1,6 +1,15 @@
 [%- WRAPPER 'include/layout.tt' %]
 <h2>control panel</h2>
 
+[%- IF c().validator().has_error() || failed || c().req.parameters.get('failed') %]
+<div class="alert alert-warning" role="alert">
+    Failed to update the whitelist!
+</div>
+[%- ELSIF success || c().req.parameters.get('success') %]
+<div class="alert alert-success" role="alert">
+    The whitelist has been updated!
+</div>
+[%- END %]
 <form method="post">
     <p>Your member id: [% c().logged_in_member().id %]<br>
     Your IP addreres: [% client_ip_address %]</p>

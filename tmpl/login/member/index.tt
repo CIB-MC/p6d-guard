@@ -1,8 +1,13 @@
 [%- WRAPPER 'include/layout.tt' %]
 <p>Login</p>
+[%- IF c().validator().has_error %]
+<div class="alert alert-warning" role="alert">
+    ID or password is incorrect.
+</div>
+[%- END %]
 <form method="post">
-    <label>id: <input type="text" name="login_id"></label><br>
-    <label>pw: <input type="password" name="password"></label><br>
+    <label>ID: <input type="text" name="login_id"></label><br>
+    <label>PW: <input type="password" name="password"></label><br>
     <button type="submit">login</button>
 </form>
 [%- END %]

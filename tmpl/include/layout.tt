@@ -26,15 +26,7 @@
     <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">p6d-guard</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
+                <a class="navbar-brand" href="/member/">p6d-guard</a>
             </div>
         </div><!-- /.container -->
     </div><!-- /.navbar -->

@@ -65,7 +65,8 @@ sub index {
 
         return $c->render('member/index.tt', {
             client_ip_address => $client_ip_address,
-            whitelist => \@whitelist
+            whitelist => \@whitelist,
+            failed => 1
         });
     }
     P6dGuard::Util::Nginx::reload($c);
@@ -78,7 +79,8 @@ sub index {
 
     return $c->render('member/index.tt', {
         client_ip_address => $client_ip_address,
-        whitelist => \@whitelist
+        whitelist => \@whitelist,
+        success => 1
     });
 }
 
@@ -87,22 +89,22 @@ sub ip_delete {
     my $req_param = $c->req->parameters;
 
     my $row_id = $req_param->{row_id};
-    return $c->redirect('/member/') if (!$row_id);
+    return $c->redirect('/member/?failed=1') if (!$row_id);
 
     my $row = $c->db()->single('whitelist', {
         id => $row_id,
         member_id => $c->logged_in_member()->id
     });
-    return $c->redirect('/member/') if (!$row);
+    return $c->redirect('/member/?failed=1') if (!$row);
 
     $row->delete();
     P6dGuard::Util::Nginx::create_allow_ips_model($c);
     if (!P6dGuard::Util::Nginx::config_test($c)) {
         P6dGuard::Util::Nginx::clear_allow_ips_model($c);
-        return $c->redirect('/member/');
+        return $c->redirect('/member/?failed=1');
     }
     P6dGuard::Util::Nginx::reload($c);
-    return $c->redirect('/member/');
+    return $c->redirect('/member/?success=1');
 }
 
 sub logout {
