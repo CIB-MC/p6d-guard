@@ -46,4 +46,11 @@ __PACKAGE__->add_trigger(
     },
 );
 
+use FormValidator::Lite;
+FormValidator::Lite->load_constraints(qw/Email Date File URL/);
+sub validator {
+    my $c = shift;
+    $c->{validator} ||= FormValidator::Lite->new($c->req);
+}
+
 1;

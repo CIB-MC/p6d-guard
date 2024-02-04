@@ -1,7 +1,7 @@
 [%- WRAPPER 'include/layout.tt' %]
 <h2>control panel</h2>
 
-<form action="/member/add_whitelist/" method="post">
+<form method="post">
     <p>Your member id: [% c().logged_in_member().id %]<br>
     Your IP addreres: [% client_ip_address %]</p>
     <button type="submit">add/update by this IP</button>

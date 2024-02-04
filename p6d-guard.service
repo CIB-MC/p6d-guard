@@ -1,0 +1,14 @@
+[Unit]
+Description=p6d-guard service
+
+[Service]
+User=p6d-guard
+Type=simple
+ExecStart=/home/p6d-guard/P6dGuard/script/start.sh
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+WorkingDirectory=/home/p6d-guard/P6dGuard/
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

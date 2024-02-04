@@ -12,8 +12,7 @@ any  '/' => 'Index#redirect_member_login';
 
 any  '/login/member/' => 'Login::Member#index';
 
-get  '/member/' => 'Member#index';
-post '/member/add_whitelist/' => 'Member#add_whitelist';
+any  '/member/' => 'Member#index';
 get  '/member/logout/' => 'Member#logout';
 
 1;

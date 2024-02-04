@@ -9,4 +9,8 @@ my $dbpath = File::Spec->catfile($basedir, 'production.db');
             sqlite_unicode => 1,
         }
     ],
+    'command' => {
+        nginx_config_test => 'sudo nginx -t',
+        nginx_reload => 'sudo systemctl reload nginx.service'
+    }
 };
