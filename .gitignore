@@ -16,4 +16,4 @@ MYMETA.yml
 /_build/
 /local/
 /.carton/
-/nginx/allow_ips.mode
+/nginx/allow_ips.model

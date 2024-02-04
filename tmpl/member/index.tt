@@ -19,7 +19,7 @@
 <div>
     <h3>whitelist</h3>
     [%- IF whitelist.size() == 0 %]
-        <p>no ip id whitelisted</p>
+        <p>no ip is whitelisted</p>
     [%- ELSE %]
         <table border="1">
             <tbody>
