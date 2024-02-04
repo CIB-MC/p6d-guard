@@ -18,7 +18,7 @@ PLACK_ENV=production ~/P6dGuard/script/env ~/P6dGuard/script_admin/create_member
 
 Create systemd service as `p6d-guard.service` file, enable and start the service.
 
-Please allow p6d-guard user to execute `sudo nginx -t` and `sudo systemctl nginx reload`.
+Please allow p6d-guard user to execute `sudo nginx -t` and `sudo systemctl reload nginx.service`.
 
 You can change commands to use by editing a file in `Config` dir. 
 
