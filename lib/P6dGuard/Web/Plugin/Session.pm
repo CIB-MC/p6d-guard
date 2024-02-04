@@ -62,7 +62,7 @@ sub _session {
             },
             xsrf_cookie => {
                 httponly => 0,
-                secure   => 1,
+                secure   => 0,
                 name     => 'XSRF-TOKEN',
                 path     => '/',
                 samesite => 'Strict'

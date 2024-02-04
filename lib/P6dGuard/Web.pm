@@ -16,6 +16,7 @@ __PACKAGE__->load_plugins(
     'Web::FillInFormLite',
     'Web::JSON',
     '+P6dGuard::Web::Plugin::Session',
+    '+P6dGuard::Web::Hook::LoginCheck',
 );
 
 # setup view

@@ -3,28 +3,17 @@ use strict;
 use warnings;
 use utf8;
 use Amon2::Web::Dispatcher::RouterBoom;
+use Module::Find qw(useall);
 
-any '/' => sub {
-    my ($c) = @_;
-    my $counter = $c->session->get('counter') || 0;
-    $counter++;
-    $c->session->set('counter' => $counter);
-    return $c->render('index.tt', {
-        counter => $counter,
-    });
-};
+useall('P6dGuard::Web::C');
+base 'P6dGuard::Web::C';
 
-post '/reset_counter' => sub {
-    my $c = shift;
-    $c->session->remove('counter');
-    $c->session->expire();
-    return $c->redirect('/');
-};
+any  '/' => 'Index#redirect_member_login';
 
-post '/account/logout' => sub {
-    my ($c) = @_;
-    $c->session->expire();
-    return $c->redirect('/');
-};
+any  '/login/member/' => 'Login::Member#index';
+
+get  '/member/' => 'Member#index';
+post '/member/add_whitelist/' => 'Member#add_whitelist';
+get  '/member/logout/' => 'Member#logout';
 
 1;

@@ -1,0 +1,36 @@
+[%- WRAPPER 'include/layout.tt' %]
+<h2>control panel</h2>
+
+<form action="/member/add_whitelist/" method="post">
+    <p>Your member id: [% c().logged_in_member().id %]<br>
+    Your IP addreres: [% client_ip_address %]</p>
+    <button type="submit">add/update by this IP</button>
+</form>
+<hr>
+<div>
+    <h3>whitelist</h3>
+    [%- IF whitelist.size() == 0 %]
+        <p>no ip id whitelisted</p>
+    [%- ELSE %]
+        <table border="1">
+            <tbody>
+                <tr>
+                    <th>member id</th>
+                    <th>ip address</th>
+                    <th>last update</th>
+                </tr>
+                [%- FOR row IN whitelist %]
+                    <tr>
+                        <td>[% row.member_id %]</td>
+                        <td>[% row.ip_address %]</td>
+                        <td>[% row.last_update %]</td>
+                    </tr>
+                [% END %]
+            </tbody>
+        </table>
+    [%- END %]
+</div>
+
+<hr>
+<a href="/member/logout/">logout</a>
+[%- END %]

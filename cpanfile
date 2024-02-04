@@ -16,6 +16,10 @@ requires 'Time::Piece', '1.20';
 requires 'perl', '5.010_001';
 requires 'HTTP::Session2::ServerStore', '1.10';
 requires 'Cache::Memcached::Fast::Safe', '0.06';
+requires 'Module::Find', '0.16';
+requires 'Digest::SHA', '6.04';
+requires 'String::Random', '0.32';
+requires 'FormValidator::Lite', '0.32';
 
 on configure => sub {
     requires 'Module::Build', '0.38';
