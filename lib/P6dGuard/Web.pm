@@ -4,6 +4,10 @@ use warnings;
 use utf8;
 use parent qw/P6dGuard Amon2::Web/;
 use File::Spec;
+use POSIX;
+
+use constant KiB_MiB => 1024;
+use constant KiB_GiB => 1024*1024; 
 
 # dispatcher
 use P6dGuard::Web::Dispatcher;
@@ -51,6 +55,13 @@ FormValidator::Lite->load_constraints(qw/Email Date File URL/);
 sub validator {
     my $c = shift;
     $c->{validator} ||= FormValidator::Lite->new($c->req);
+}
+
+sub byte_to_gigabyte {
+    my ($c, $byte) = @_;
+    my $gigabyte_sect = POSIX::floor($byte / KiB_GiB);
+    my $megabyte_sect = POSIX::floor(($byte - $gigabyte_sect * KiB_GiB) / KiB_MiB);
+    return $gigabyte_sect . "." . $megabyte_sect; 
 }
 
 1;

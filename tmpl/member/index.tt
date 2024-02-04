@@ -1,5 +1,6 @@
 [%- WRAPPER 'include/layout.tt' %]
-<h2>control panel</h2>
+<h2>Whitelist control panel</h2>
+<hr>
 
 [%- IF c().validator().has_error() || failed || c().req.parameters.get('failed') %]
 <div class="alert alert-warning" role="alert">
@@ -61,5 +62,5 @@
 </div>
 
 <hr>
-<a href="/member/logout/">logout</a>
+<a href="/member/system/">System control panel</a> | <a href="/member/logout/">logout</a>
 [%- END %]

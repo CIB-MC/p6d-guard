@@ -1,0 +1,90 @@
+[%- WRAPPER 'include/layout.tt' %]
+<h2>System control panel</h2>
+<hr>
+
+[%- IF c().validator().has_error() || failed || c().req.parameters.get('failed') %]
+<div class="alert alert-warning" role="alert">
+    Failed to execute server command!
+</div>
+[%- ELSIF success || c().req.parameters.get('success') %]
+<div class="alert alert-success" role="alert">
+    The command has been executed!
+</div>
+[%- END %]
+
+<h3>Memory usage</h3>
+[%- IF memory_usage.mem %]
+    <div>
+        <canvas id="mem_usage_canvas" width="1024" height="30" style="width:100%;"></canvas><br>
+        Total: [% c().byte_to_gigabyte(memory_usage.mem.total) %] GiB<br>
+        Available: [% c().byte_to_gigabyte(memory_usage.mem.available) %] GiB
+        <script>
+            {
+                const usage = [% (memory_usage.mem.total - memory_usage.mem.available) / memory_usage.mem.total %];
+                let c = document.getElementById('mem_usage_canvas');
+                let ctx = c.getContext('2d');
+                let c_width = c.width;
+                let c_height = c.height;
+                ctx.fillStyle= "#eee";
+                ctx.fillRect(0,0,c_width,c_height);
+                ctx.fillStyle= "#aaa";
+                ctx.fillRect(0,0,c_width*usage,c_height);
+            }
+        </script>
+    </div>
+[%- ELSE %]
+    <p>Failed to get memory usage.</p>
+[%- END %]
+<hr>
+<h3>Swap usage</h3>
+[%- IF memory_usage.swap %]
+    <div>
+        <canvas id="swap_usage_canvas" width="1024" height="30" style="width:100%;"></canvas><br>
+        Total: [% c().byte_to_gigabyte(memory_usage.swap.total) %] GiB<br>
+        Free: [% c().byte_to_gigabyte(memory_usage.swap.free) %] GiB
+        <script>
+            {
+                const usage = [% (memory_usage.swap.total - memory_usage.swap.free) / memory_usage.swap.total %];
+                let c = document.getElementById('swap_usage_canvas');
+                let ctx = c.getContext('2d');
+                let c_width = c.width;
+                let c_height = c.height;
+                ctx.fillStyle= "#eee";
+                ctx.fillRect(0,0,c_width,c_height);
+                ctx.fillStyle= "#aaa";
+                ctx.fillRect(0,0,c_width*usage,c_height);
+            }
+        </script>
+    </div>
+[%- ELSE %]
+    <p>Failed to get swap usage.</p>
+[%- END %]
+<hr>
+<h3>Game server control</h3>
+<p>Game server is[% IF !game_server_is_active %] not[% END %] active.</p>
+<div class="flex_area">
+    <form method="post">
+        <input type="hidden" name="server_start" value="1">
+        <button type="submit"[% IF game_server_is_active %] disabled[% END %]>Start</button>
+    </form>
+    <form method="post">
+        <input type="hidden" name="server_restart" value="1">
+        <button type="submit"[% IF !game_server_is_active %] disabled[% END %]>Restart</button>
+    </form>
+    <form method="post">
+        <input type="hidden" name="server_stop" value="1">
+        <button type="submit"[% IF !game_server_is_active %] disabled[% END %]>Stop</button>
+    </form>
+</div>
+<style>
+    .flex_area {
+        display: flex;
+        gap: 1em;
+    }
+    .flex_area button {
+        padding: 0.2em 1em;
+    }
+</style>
+<hr>
+<a href="/member/">Whitelist control panel</a> | <a href="/member/logout/">logout</a>
+[%- END %]

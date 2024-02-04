@@ -5,6 +5,8 @@ use utf8;
 
 use Time::Piece;
 use P6dGuard::Util::Nginx;
+use P6dGuard::Util::SystemInfo;
+use P6dGuard::Util::GameServer;
 
 sub index {
     my ($self, $c) = @_;
@@ -105,6 +107,51 @@ sub ip_delete {
     }
     P6dGuard::Util::Nginx::reload($c);
     return $c->redirect('/member/?success=1');
+}
+
+sub system {
+    my ($self, $c) = @_;
+    my $req_param = $c->req->parameters;
+
+    my $memory_usage = P6dGuard::Util::SystemInfo::get_memory_usage;
+    my $game_server_is_active = P6dGuard::Util::GameServer::is_active($c);
+
+    return $c->render('member/system.tt', {
+        memory_usage => $memory_usage,
+        game_server_is_active => $game_server_is_active
+    }) if ($c->req->method ne 'POST');
+
+    if ($req_param->{server_start}) {
+        if (P6dGuard::Util::GameServer::is_active($c)) {
+            return $c->redirect('/member/system/?failed=1');
+        }
+        if (!P6dGuard::Util::GameServer::start($c)) {
+            return $c->redirect('/member/system/?failed=1');
+        }
+    } elsif ($req_param->{server_restart}) {
+        if (!P6dGuard::Util::GameServer::is_active($c)) {
+            return $c->redirect('/member/system/?failed=1');
+        }
+        if (!P6dGuard::Util::GameServer::restart($c)) {
+            return $c->redirect('/member/system/?failed=1');
+        }
+    } elsif ($req_param->{server_stop}) {
+        if (!P6dGuard::Util::GameServer::is_active($c)) {
+            return $c->redirect('/member/system/?failed=1');
+        }
+        if (!P6dGuard::Util::GameServer::stop($c)) {
+            return $c->redirect('/member/system/?failed=1');
+        }
+    } else {
+        return $c->redirect('/member/system/?failed=1');
+    }
+
+    $game_server_is_active = P6dGuard::Util::GameServer::is_active($c);
+    return $c->render('member/system.tt', {
+        memory_usage => $memory_usage,
+        game_server_is_active => $game_server_is_active,
+        success => 1
+    })
 }
 
 sub logout {
